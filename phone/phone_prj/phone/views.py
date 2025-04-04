@@ -21,14 +21,7 @@ def create(request):
     return render(request, 'phone/create.html')
 
 def result(request):
-    keyword = request.GET.get('keyword','')
-    if keyword:
-        phones = Phone.objects.filter(name__contains=keyword).order_by('name')
-    else:
-        phones = []
+    keyword = request.GET.get('keyword')
+    result = Phone.objects.filter(name__contains = keyword).order_by('name')
     
-    context = {
-        'keyword' : keyword,
-        'phones' : phones,
-    }
-    return render(request, 'phone/result.html', context)
+    return render(request, "result.html", {'keyword':keyword, 'result':result})
